@@ -1,0 +1,19 @@
+# example yaml file
+
+changelog:
+  exclude:
+    labels:
+      - ignore-for-changelog
+      - dependencies
+    authors:
+      - hizumiaoba
+  categories:
+    - title: 互換性の変更
+      labels:
+        - major
+    - title: 機能追加
+      labels:
+        - minor
+    - title: 不具合修正
+      labels:
+        - bugfix

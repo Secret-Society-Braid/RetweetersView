@@ -15,6 +15,8 @@ module org.braid.society.secret.retweetersview {
     // test program entries
     requires org.junit.platform.engine;
     requires org.junit.jupiter.engine;
+    requires scribejava.core;
+    requires twitter.api.java.sdk;
 
 
     opens org.braid.society.secret.retweetersview to javafx.fxml;

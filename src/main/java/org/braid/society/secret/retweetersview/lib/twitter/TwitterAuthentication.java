@@ -12,7 +12,6 @@ import org.braid.society.secret.retweetersview.lib.util.PropertiesFileController
 import javax.swing.JOptionPane;
 import java.awt.Desktop;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
@@ -94,7 +93,7 @@ public class TwitterAuthentication {
 
         } catch (IOException e) {
             log.error("Encountered I/O Error while handshaking with twitter api.", e);
-        } catch (MalformedURLException | URISyntaxException | ExecutionException another) {
+        } catch (URISyntaxException | ExecutionException another) {
             log.error("Exception while parsing Strings into URI.", another);
             JOptionPane.showInternalMessageDialog(null, "認証ページのURL処理中にエラーが発生しました。しばらく待ってやり直すか、ソフトウェアを再ダウンロードしてみてください。");
         } catch (InterruptedException interrupted) {

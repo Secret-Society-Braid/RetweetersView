@@ -4,6 +4,7 @@ changelog:
   exclude:
     labels:
       - ignore-for-changelog
+      - dependencies
     authors:
       - hizumiaoba
   categories:

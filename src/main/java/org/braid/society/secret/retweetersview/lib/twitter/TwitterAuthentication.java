@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.braid.society.secret.retweetersview.lib.util.Base64ControllUtil;
 import org.braid.society.secret.retweetersview.lib.util.InternalOperationUtil;
 import org.braid.society.secret.retweetersview.lib.util.PropertiesFileController;
+import org.braid.society.secret.retweetersview.lib.util.enums.ExitCodeEnum;
 
 import javax.swing.JOptionPane;
 import java.awt.Desktop;
@@ -76,7 +77,7 @@ public class TwitterAuthentication {
             if(userSelected != JOptionPane.OK_OPTION) {
                 log.warn("User rejected to authorize with Twitter.");
                 JOptionPane.showMessageDialog(null, "認証が拒否されました。アプリケーションは利用できないため、終了します。");
-                InternalOperationUtil.exit(-12);
+                InternalOperationUtil.exit(ExitCodeEnum.REJECT_AUTH);
             }
             URI uri = new URI(authorizationUrl);
             Desktop desktop = Desktop.getDesktop();

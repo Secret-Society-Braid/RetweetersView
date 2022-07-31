@@ -15,4 +15,8 @@ public enum ExitCodeEnum {
     ExitCodeEnum(int val) {
         this.val = val;
     }
+
+    public int getCode() {
+        return this.val;
+    }
 }

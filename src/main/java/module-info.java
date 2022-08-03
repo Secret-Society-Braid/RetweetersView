@@ -10,13 +10,13 @@ module org.braid.society.secret.retweetersview {
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires com.google.common;
-    requires jsr305;
 
     // test program entries
     requires org.junit.platform.engine;
     requires org.junit.jupiter.engine;
     requires scribejava.core;
     requires twitter.api.java.sdk;
+    requires jsr305;
 
 
     opens org.braid.society.secret.retweetersview to javafx.fxml;

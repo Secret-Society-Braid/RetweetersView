@@ -43,7 +43,9 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.11'
     implementation 'ch.qos.logback:logback-core:1.2.11'
     implementation 'com.google.guava:guava:31.1-jre'
-    implementation 'com.twitter:twitter-api-java-sdk:2.0.2'
+    implementation('com.twitter:twitter-api-java-sdk:2.0.2') {
+        exclude group: 'org.apache.oltu.oauth2', module: 'org.apache.oltu.oauth2.client'
+    }
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.3'

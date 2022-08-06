@@ -37,7 +37,6 @@ javafx {
 
 dependencies {
 
-    implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     implementation("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'ch.qos.logback:logback-classic:1.2.11'
@@ -45,14 +44,14 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-jre'
     implementation('com.twitter:twitter-api-java-sdk:2.0.2') {
         exclude group: 'org.apache.oltu.oauth2', module: 'org.apache.oltu.oauth2.client'
+        exclude group: 'javax.ws.rs', module: 'jsr311-api'
     }
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.3'
     implementation 'org.projectlombok:lombok:1.18.24'
     implementation('javax.xml.bind:jaxb-api:2.3.0')
-    implementation('com.sun.xml.bind:jaxb-core:2.3.0')
-    implementation('com.sun.xml.bind:jaxb-impl:2.3.0')
+    implementation 'com.sun.activation:javax.activation:1.2.0'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 

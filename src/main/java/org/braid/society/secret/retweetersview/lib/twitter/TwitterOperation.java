@@ -1,7 +1,10 @@
 package org.braid.society.secret.retweetersview.lib.twitter;
 
+import com.twitter.clientlib.ApiException;
 import com.twitter.clientlib.TwitterCredentialsOAuth2;
 import com.twitter.clientlib.api.TwitterApi;
+import com.twitter.clientlib.model.TweetCreateRequest;
+import com.twitter.clientlib.model.TweetCreateResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -27,13 +30,25 @@ public class TwitterOperation {
     }
 
     /**
-     *
-     * @param status
-     * @return
+     * post the tweet with specified text.
+     * <p>
+     *     this method will block the thread until the tweet is posted.
+     * </p>
+     * @param status the text of the tweet.
+     * @return {@code true} if the tweet is posted successfully, {@code false} otherwise.
      */
     public boolean postTweet(String status) {
         boolean res = false;
-
+        apiValidate();
+        TweetCreateRequest request = new TweetCreateRequest();
+        request.setText(status);
+        try {
+            TweetCreateResponse response = apiInstance.tweets().createTweet(request).execute();
+            log.info("Tweet created successfully. Tweet id: {}", response);
+            res = true;
+        } catch (ApiException e) {
+            log.error("Exception while creating tweet", e);
+        }
         return res;
     }
 

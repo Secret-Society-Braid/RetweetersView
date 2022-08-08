@@ -7,6 +7,8 @@ import com.twitter.clientlib.model.TweetCreateRequest;
 import com.twitter.clientlib.model.TweetCreateResponse;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Optional;
+
 @Slf4j
 public class TwitterOperation {
 
@@ -37,15 +39,16 @@ public class TwitterOperation {
      * @param status the text of the tweet.
      * @return {@code true} if the tweet is posted successfully, {@code false} otherwise.
      */
-    public boolean postTweet(String status) {
-        boolean res = false;
+    public Optional<String> postTweet(String status) {
+        Optional<String> res = Optional.empty();
         apiValidate();
         TweetCreateRequest request = new TweetCreateRequest();
         request.setText(status);
         try {
             TweetCreateResponse response = apiInstance.tweets().createTweet(request).execute();
             log.info("Tweet created successfully. Tweet id: {}", response);
-            res = true;
+            if(response.getData() != null)
+                res = Optional.of(response.getData().getId());
         } catch (ApiException e) {
             log.error("Exception while creating tweet", e);
         }

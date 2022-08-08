@@ -15,6 +15,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
@@ -115,6 +116,13 @@ public class TwitterAuthentication {
         PropertiesFileController extPropController = new PropertiesFileController(extProp);
         extPropController.setFileName(TWITTER_ACCESS_TOKEN_PROPERTIES_FILE_NAME);
         extPropController.write();
+    }
+
+    public static OAuth2AccessToken getAccessTokenFromLocal() {
+        PropertiesFileController propController = new PropertiesFileController(TWITTER_ACCESS_TOKEN_PROPERTIES_FILE_NAME);
+        propController.loadPropertiesFromLocal();
+        Properties properties = Optional.ofNullable(propController.getProperties()).orElseThrow();
+        return new OAuth2AccessToken(properties.getProperty("accessToken", ""));
     }
 
 }

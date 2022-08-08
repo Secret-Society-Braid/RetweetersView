@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
@@ -53,6 +54,8 @@ public class PropertiesFileController {
             log.warn("file name must not be null or empty.");
             return;
         }
+        if(Files.notExists(Paths.get(fileName)))
+            return;
         Properties prop = new Properties();
         try(InputStream is = new BufferedInputStream(new FileInputStream(Paths.get(fileName).toFile()))) {
             prop.load(is);

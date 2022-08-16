@@ -21,4 +21,6 @@ module org.braid.society.secret.retweetersview {
 
     opens org.braid.society.secret.retweetersview to javafx.fxml;
     exports org.braid.society.secret.retweetersview;
+    exports org.braid.society.secret.retweetersview.lib.controls;
+    opens org.braid.society.secret.retweetersview.lib.controls to javafx.fxml;
 }

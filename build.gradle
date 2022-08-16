@@ -27,7 +27,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'org.braid.society.secret.retweetersview'
-    mainClass = 'org.braid.society.secret.retweetersview.HelloApplication'
+    mainClass = 'org.braid.society.secret.retweetersview.MainApplication'
 }
 
 javafx {

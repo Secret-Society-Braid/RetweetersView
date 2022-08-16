@@ -1,4 +1,4 @@
-package org.braid.society.secret.retweetersview;
+package org.braid.society.secret.retweetersview.lib.controls;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class HelloController {
+public class MainController {
 
     @FXML
     private Label mainTitle;

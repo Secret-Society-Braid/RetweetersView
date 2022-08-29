@@ -40,7 +40,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:2.0.0'
     implementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     implementation("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    implementation 'ch.qos.logback:logback-classic:1.4.0'
     implementation 'ch.qos.logback:logback-core:1.2.11'
     implementation 'com.google.guava:guava:31.1-jre'
     implementation('com.twitter:twitter-api-java-sdk:2.0.2') {

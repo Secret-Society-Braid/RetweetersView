@@ -1,6 +1,7 @@
 module org.braid.society.secret.retweetersview {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
 
     // main program entries
     requires java.xml;

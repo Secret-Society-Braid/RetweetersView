@@ -37,7 +37,7 @@ public class TwitterOperation {
      *     this method will block the thread until the tweet is posted.
      * </p>
      * @param status the text of the tweet.
-     * @return {@code true} if the tweet is posted successfully, {@code false} otherwise.
+     * @return Tweet ID String if succeeded, otherwise {@link Optional#empty()} will be returned.
      */
     public Optional<String> postTweet(String status) {
         Optional<String> res = Optional.empty();

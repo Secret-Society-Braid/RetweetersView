@@ -44,3 +44,4 @@ bin/
 /.idea/
 
 /src/main/resources/org/braid/society/secret/retweetersview/twitter_consumer_token.properties
+/src/test/resources/org.braid.society.secret.retweetersview/twitter_consumer_token.properties

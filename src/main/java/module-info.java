@@ -3,13 +3,14 @@ module org.braid.society.secret.retweetersview {
   requires javafx.fxml;
   requires javafx.graphics;
 
-  // main program entries
-  requires java.xml;
-  requires java.desktop;
-  requires lombok;
-  requires org.slf4j;
-  requires com.fasterxml.jackson.core;
-  requires com.fasterxml.jackson.databind;
+    // main program entries
+    requires java.xml;
+    requires java.desktop;
+    requires lombok;
+    requires org.slf4j;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
+    requires com.google.common;
 
   // test program entries
   requires org.junit.platform.engine;
@@ -21,4 +22,8 @@ module org.braid.society.secret.retweetersview {
 
   opens org.braid.society.secret.retweetersview to javafx.fxml;
   exports org.braid.society.secret.retweetersview;
+    opens org.braid.society.secret.retweetersview to javafx.fxml;
+    exports org.braid.society.secret.retweetersview;
+    exports org.braid.society.secret.retweetersview.lib.controls;
+    opens org.braid.society.secret.retweetersview.lib.controls to javafx.fxml;
 }

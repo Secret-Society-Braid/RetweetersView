@@ -1,13 +1,13 @@
 package org.braid.society.secret.retweetersview;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 class EnvironmentTest {
 
-    @Test
-    void envTest() {
-        assertTrue(true);
-    }
+  @Test
+  void envTest() {
+    assertTrue(true);
+  }
 }

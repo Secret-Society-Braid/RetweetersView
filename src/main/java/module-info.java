@@ -17,6 +17,7 @@ module org.braid.society.secret.retweetersview {
     requires scribejava.core;
     requires twitter.api.java.sdk;
     requires jsr305;
+    requires guava;
 
 
     opens org.braid.society.secret.retweetersview to javafx.fxml;

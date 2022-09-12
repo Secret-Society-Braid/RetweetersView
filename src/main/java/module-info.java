@@ -14,7 +14,7 @@ module org.braid.society.secret.retweetersview {
   // test program entries
   requires org.junit.platform.engine;
   requires org.junit.jupiter.engine;
-  requires org.hamcrest;
+  requires hamcrest.all;
   requires scribejava.core;
   requires twitter.api.java.sdk;
   requires jsr305;

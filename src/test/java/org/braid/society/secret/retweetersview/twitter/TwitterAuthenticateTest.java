@@ -1,8 +1,8 @@
 package org.braid.society.secret.retweetersview.twitter;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -16,10 +16,12 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import org.braid.society.secret.retweetersview.lib.util.Base64ControllUtil;
 import org.braid.society.secret.retweetersview.lib.util.PropertiesFileController;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class TwitterAuthenticateTest {
 
+  @Disabled("prototype method testing purpose")
   @Test
   void getAccessTokenMethodTest() {
     PropertiesFileController controller = new PropertiesFileController(
@@ -46,11 +48,12 @@ class TwitterAuthenticateTest {
       pkce.setCodeVerifier("challenge");
       String authorizationUrl = service.getAuthorizationUrl(pkce, secretState);
 
-      final String code = JOptionPane.showInputDialog("Please access this url to grant access to the app.", authorizationUrl);
+      final String code = JOptionPane.showInputDialog(
+          "Please access this url to grant access to the app.", authorizationUrl);
       accessToken = service.getAccessToken(pkce, code);
 
-      assertThat(accessToken.getAccessToken(), is(not(emptyOrNullString())));
-      assertThat(accessToken.getRefreshToken(), is(not(emptyOrNullString())));
+      assertThat(accessToken.getAccessToken(), is(not(isEmptyOrNullString())));
+      assertThat(accessToken.getRefreshToken(), is(not(isEmptyOrNullString())));
 
     } catch (IOException | ExecutionException | InterruptedException e) {
       fail(e); // replace this for production

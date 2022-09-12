@@ -49,6 +49,7 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.24'
     implementation('javax.xml.bind:jaxb-api:2.3.1')
     implementation('com.sun.xml.bind:jaxb-core:4.0.0')
+    implementation 'org.hamcrest:hamcrest:2.2'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 

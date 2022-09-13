@@ -14,12 +14,33 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
+import org.braid.society.secret.retweetersview.lib.twitter.TwitterAuthentication;
 import org.braid.society.secret.retweetersview.lib.util.Base64ControllUtil;
 import org.braid.society.secret.retweetersview.lib.util.PropertiesFileController;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class TwitterAuthenticateTest {
+
+  private static TwitterAuthentication instance;
+
+  @BeforeAll
+  static void setUp() {
+    instance = new TwitterAuthentication();
+  }
+
+  @Test
+  void authorizationTest() {
+    try {
+      // prepare for assertion
+      String actual = instance.generateAuthorizationUrl();
+      // assertions
+      assertThat(actual, not(isEmptyOrNullString()));
+    } catch (IOException e) {
+      fail(e);
+    }
+  }
 
   @Disabled("prototype method testing purpose")
   @Test
@@ -29,7 +50,8 @@ class TwitterAuthenticateTest {
     controller.loadPropertiesFromResource();
     Properties tokenProperties = controller.getProperties();
     final String clientId = tokenProperties.getProperty("clientId");
-    final String clientSecret = Base64ControllUtil.decodeBase64(tokenProperties.getProperty("clientSecret"));
+    final String clientSecret = Base64ControllUtil.decodeBase64(
+        tokenProperties.getProperty("clientSecret"));
 
     OAuth2AccessToken accessToken;
 

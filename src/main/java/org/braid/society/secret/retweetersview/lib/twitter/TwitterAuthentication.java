@@ -1,17 +1,20 @@
 package org.braid.society.secret.retweetersview.lib.twitter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.github.scribejava.core.pkce.PKCE;
 import com.github.scribejava.core.pkce.PKCECodeChallengeMethod;
 import com.google.common.base.Strings;
 import com.twitter.clientlib.auth.TwitterOAuth20Service;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.braid.society.secret.retweetersview.lib.util.Base64ControllUtil;
@@ -31,7 +34,6 @@ import org.braid.society.secret.retweetersview.lib.util.PropertiesFileController
 public class TwitterAuthentication {
 
   private static final String TWITTER_ACCESS_TOKEN_PROPERTIES_FILE_NAME = "twitter_access_token.properties";
-  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private static final String CLIENT_ID;
   private static final String CLIENT_SECRET;
   protected static final Properties TWITTER_CONSUMER_PROPERTIES;
@@ -51,6 +53,7 @@ public class TwitterAuthentication {
 
   protected PKCE pkce;
 
+  @Nonnull
   private static String generateRandomString(int length) {
     if (length < 0 || length > 499) {
       throw new IllegalArgumentException("Invalid string length requested : " + length);
@@ -72,11 +75,28 @@ public class TwitterAuthentication {
   }
 
   private static void store(OAuth2AccessToken token) throws IOException {
-    final String rawResponse = token.getRawResponse();
-    ObjectWriter writer = OBJECT_MAPPER.writer();
-    writer.writeValue(Paths.get(TWITTER_ACCESS_TOKEN_PROPERTIES_FILE_NAME).toFile(), rawResponse);
+    try (ObjectOutputStream oos = new ObjectOutputStream(
+        new FileOutputStream(TWITTER_ACCESS_TOKEN_PROPERTIES_FILE_NAME))) {
+      log.info("Attempt to record user's access token...");
+      oos.writeObject(token);
+      log.info("Record complete.");
+    }
   }
 
+  @Nullable
+  public OAuth2AccessToken readLocal() throws IOException {
+    OAuth2AccessToken res = null;
+    try (ObjectInputStream ois = new ObjectInputStream(
+        new FileInputStream(TWITTER_ACCESS_TOKEN_PROPERTIES_FILE_NAME))) {
+      log.info("Attempt to read user's access token");
+      res = (OAuth2AccessToken) ois.readObject();
+    } catch (ClassNotFoundException e) {
+      log.error("Cannot cast correctly to OAuth2AccessToken", e);
+    }
+    return res;
+  }
+
+  @Nonnull
   public String generateAuthorizationUrl() throws IOException {
     log.info("Fetching user's authorization URL...");
     String result;
@@ -98,6 +118,7 @@ public class TwitterAuthentication {
     return result;
   }
 
+  @Nullable
   public OAuth2AccessToken getAccessTokenWithCode(String code) throws IOException {
     if (Strings.isNullOrEmpty(code)) {
       throw new IllegalArgumentException("Authorization code must not be null or empty.");

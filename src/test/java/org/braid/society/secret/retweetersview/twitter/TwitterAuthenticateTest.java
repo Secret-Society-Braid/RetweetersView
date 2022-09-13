@@ -56,7 +56,7 @@ class TwitterAuthenticateTest {
 
     OAuth2AccessToken accessToken;
 
-    try(TwitterOAuth20Service service = new TwitterOAuth20Service(
+    try (TwitterOAuth20Service service = new TwitterOAuth20Service(
         clientId,
         clientSecret,
         "https://hizumiaoba.github.io/Personal-pages/cushions/retweetersview/",

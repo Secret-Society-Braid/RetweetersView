@@ -33,10 +33,10 @@ import org.braid.society.secret.retweetersview.lib.util.PropertiesFileController
 @NoArgsConstructor
 public class TwitterAuthentication {
 
+  protected static final Properties TWITTER_CONSUMER_PROPERTIES;
   private static final String TWITTER_ACCESS_TOKEN_PROPERTIES_FILE_NAME = "twitter_access_token.properties";
   private static final String CLIENT_ID;
   private static final String CLIENT_SECRET;
-  protected static final Properties TWITTER_CONSUMER_PROPERTIES;
   private static final String TWITTER_CONSUMER_PROPERTIES_FILE_NAME = "twitter_consumer_token.properties";
   private static final String CALLBACK_URI = "https://io.github.com/Personal-pages/cushions/retweetersview/";
   private static final String REQUIRED_SCOPES = "tweet.read tweet.write users.read offline.access"; // add another scope if needed

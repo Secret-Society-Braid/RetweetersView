@@ -25,6 +25,7 @@ import org.braid.society.secret.retweetersview.lib.util.PropertiesFileController
  * <p>
  * This class is used to authenticate with Twitter.
  * </p>
+ * and if there is a credential data in local, read from local and return it.
  *
  * @author Ranfa
  * @since 1.0.0
@@ -34,12 +35,13 @@ import org.braid.society.secret.retweetersview.lib.util.PropertiesFileController
 public class TwitterAuthentication {
 
   protected static final Properties TWITTER_CONSUMER_PROPERTIES;
-  private static final String TWITTER_ACCESS_TOKEN_PROPERTIES_FILE_NAME = "twitter_access_token.properties";
+  private static final String TWITTER_ACCESS_TOKEN_PROPERTIES_FILE_NAME = "twitter_access_token";
   private static final String CLIENT_ID;
   private static final String CLIENT_SECRET;
   private static final String TWITTER_CONSUMER_PROPERTIES_FILE_NAME = "twitter_consumer_token.properties";
   private static final String CALLBACK_URI = "https://io.github.com/Personal-pages/cushions/retweetersview/";
   private static final String REQUIRED_SCOPES = "tweet.read tweet.write users.read offline.access"; // add another scope if needed
+  private static Random r;
 
   static {
     PropertiesFileController consumerKeyPropertiesController = new PropertiesFileController(
@@ -61,7 +63,10 @@ public class TwitterAuthentication {
 
     final int leftLimit = 97; // means 'a'
     final int rightLimit = 122; // means 'Z'
-    Random r = new Random();
+    // checks field if null
+    if (r == null) {
+      r = new Random();
+    }
     log.info("Attempt to generate random string for auth state with length: {}", length);
 
     String generatedString = r.ints(leftLimit, rightLimit + 1)
@@ -69,7 +74,7 @@ public class TwitterAuthentication {
         .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
         .toString();
     log.info("Generate complete.");
-    log.info("This value won't be shown because of security purposes.");
+    log.info("generated string hash: {}", generatedString.hashCode());
 
     return generatedString;
   }
@@ -83,6 +88,12 @@ public class TwitterAuthentication {
     }
   }
 
+  /**
+   * read credentials from local.
+   *
+   * @return nullable {@link OAuth2AccessToken} instance representing user's credential
+   * @throws IOException when IO error occurred
+   */
   @Nullable
   public OAuth2AccessToken readLocal() throws IOException {
     OAuth2AccessToken res = null;
@@ -96,6 +107,12 @@ public class TwitterAuthentication {
     return res;
   }
 
+  /**
+   * generate authorization URL for authenticating to twitter.
+   *
+   * @return nonnull string for Auth URL with twitter
+   * @throws IOException when IO error occurred
+   */
   @Nonnull
   public String generateAuthorizationUrl() throws IOException {
     log.info("Fetching user's authorization URL...");
@@ -118,6 +135,13 @@ public class TwitterAuthentication {
     return result;
   }
 
+  /**
+   * Fetch user's credential from twitter and exchange it with authorization code
+   *
+   * @param code authorization code that user just retrieved
+   * @return User's credential for twitter
+   * @throws IOException when IO error occurred
+   */
   @Nullable
   public OAuth2AccessToken getAccessTokenWithCode(String code) throws IOException {
     if (Strings.isNullOrEmpty(code)) {
@@ -134,12 +158,14 @@ public class TwitterAuthentication {
       token = service.getAccessToken(pkce, code);
       store(token);
       log.debug("Access token handshaking complete.");
-    } catch (ExecutionException | InterruptedException e) {
+    } catch (ExecutionException e) {
       log.error("Exception while handshaking access token with authorization code.", e);
+    } catch (InterruptedException e) {
+      log.error("The handling thread has been interrupted by someone.", e);
+      log.error("Interrupt this ({}) thread.", Thread.currentThread());
+      Thread.currentThread().interrupt();
     }
     return token;
   }
-
-  // test codes
 
 }

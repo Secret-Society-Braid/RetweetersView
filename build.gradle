@@ -37,7 +37,7 @@ javafx {
 
 dependencies {
 
-    implementation 'org.slf4j:slf4j-api:2.0.1'
+    implementation 'org.slf4j:slf4j-api:2.0.6'
     implementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     implementation("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'ch.qos.logback:logback-classic:1.4.1'

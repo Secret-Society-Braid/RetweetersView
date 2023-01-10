@@ -15,7 +15,7 @@ repositories {
 }
 
 ext {
-    junitVersion = '5.9.0'
+    junitVersion = '5.9.2'
 }
 
 sourceCompatibility = '17'
